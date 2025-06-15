@@ -324,6 +324,14 @@ net.ipv6.conf.all.forwarding = 1" >/etc/sysctl.d/wg.conf
 }
 
 function newClient() {
+	if [[ ${SKIP_NEW_CLIENT} == "1" ]] then
+ 		echo ""
+		echo -e "${ORANGE} Skip create new client."
+		echo ""
+  
+ 		return 0
+ 	fi
+  
 	# If SERVER_PUB_IP is IPv6, add brackets if missing
 	if [[ ${SERVER_PUB_IP} =~ .*:.* ]]; then
 		if [[ ${SERVER_PUB_IP} != *"["* ]] || [[ ${SERVER_PUB_IP} != *"]"* ]]; then

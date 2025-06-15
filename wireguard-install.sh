@@ -292,7 +292,10 @@ net.ipv6.conf.all.forwarding = 1" >/etc/sysctl.d/wg.conf
 		systemctl enable "wg-quick@${SERVER_WG_NIC}"
 	fi
 
-	newClient
+	if [[ -z ${SKIP_NEW_CLIENT} ]] then
+ 		newClient
+ 	fi
+	
 	echo -e "${GREEN}If you want to add more clients, you simply need to run this script another time!${NC}"
 
 	# Check if WireGuard is running
@@ -323,15 +326,7 @@ net.ipv6.conf.all.forwarding = 1" >/etc/sysctl.d/wg.conf
 	fi
 }
 
-function newClient() {
-	if [[ ${SKIP_NEW_CLIENT} == "1" ]] then
- 		echo ""
-		echo -e "${ORANGE} Skip create new client."
-		echo ""
-  
- 		return 0
- 	fi
-  
+function newClient() {  
 	# If SERVER_PUB_IP is IPv6, add brackets if missing
 	if [[ ${SERVER_PUB_IP} =~ .*:.* ]]; then
 		if [[ ${SERVER_PUB_IP} != *"["* ]] || [[ ${SERVER_PUB_IP} != *"]"* ]]; then

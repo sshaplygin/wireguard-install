@@ -292,7 +292,7 @@ net.ipv6.conf.all.forwarding = 1" >/etc/sysctl.d/wg.conf
 		systemctl enable "wg-quick@${SERVER_WG_NIC}"
 	fi
 
-	if [[ -z ${SKIP_NEW_CLIENT} ]] then
+	if [[ -z ${SKIP_NEW_CLIENT} ]]; then
  		newClient
  	fi
 	
